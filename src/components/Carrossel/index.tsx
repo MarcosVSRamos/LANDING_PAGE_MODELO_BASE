@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { FaArrowLeft } from 'react-icons/fa6'
 import { FaArrowRight } from 'react-icons/fa6'
@@ -20,7 +20,6 @@ import {
 const Carrossel = () => {
   const [indiceAtual, setIndiceAtual] = useState(1)
   const [animando, setAnimando] = useState(false)
-  const [direcao, setDirecao] = useState<'left' | 'right'>('right')
   const [categoria, setCategoria] = useState<
     'casamentos' | 'infantil' | 'natal'
   >('casamentos')
@@ -35,7 +34,6 @@ const Carrossel = () => {
   const voltar = () => {
     if (animando) return
 
-    setDirecao('left')
     setAnimando(true)
 
     setTimeout(() => {
@@ -45,26 +43,22 @@ const Carrossel = () => {
     }, 350)
   }
 
-  const avancar = () => {
+  const avancar = useCallback(() => {
     if (animando) return
 
-    setDirecao('right')
     setAnimando(true)
 
     setTimeout(() => {
       setIndiceAtual((indice) => (indice + 1) % fotos.length)
-
       setAnimando(false)
     }, 350)
-  }
+  }, [animando, fotos.length])
 
   useEffect(() => {
-    const intervalo = setInterval(() => {
-      avancar()
-    }, 10000)
+    const intervalo = setInterval(avancar, 10000)
 
     return () => clearInterval(intervalo)
-  }, [])
+  }, [avancar])
 
   return (
     <CarrosselSection>
