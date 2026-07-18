@@ -3,7 +3,7 @@ import variaveis from '../../styles/variaveis'
 import { fadeInAnimation } from '../../styles/animacoes'
 
 type SideProps = {
-  position: 'left' | 'right' | 'center' | 'next'
+  position: 'left' | 'right' | 'center' | 'hidden'
   x?: number
   scale?: number
   opacity?: number
@@ -34,12 +34,10 @@ export const Header = styled.header`
 
 export const CarrosselDiv = styled.div`
   ${fadeInAnimation}
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  margin-left: 120px;
+  position: relative;
+  max-width: 500px;
+  height: 380px;
+  margin: 0 auto;
 
   img {
     border-radius: 22px;
@@ -76,6 +74,28 @@ export const CarrosselDiv = styled.div`
       filter: brightness(0.55) saturate(0.6) blur(0.5px);
     }
   }
+
+  button {
+    position: absolute;
+    top: 45%;
+    color: ${variaveis.lightText2};
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    z-index: 10;
+  }
+
+  .seta-esquerda {
+    left: 28px;
+  }
+
+  .seta-direita {
+    right: 28px;
+  }
+
+  button:hover {
+    color: ${variaveis.elementosDestacados};
+  }
 `
 
 export const Abas = styled.div`
@@ -101,56 +121,85 @@ export const Abas = styled.div`
 `
 
 export const CarouselItem = styled.div<SideProps>`
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  max-width: 500px;
 
-  transition:
-        transform .7s cubic-bezier(.22,.61,.36,1),
-        opacity .7s;
+  transition: all 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 
-    transform: translateX(${(props) => props.x}px)
-               scale(${(props) => props.scale});
+  ${({ position }) => {
+    switch (position) {
+      case 'left':
+        return `
+          transform: translateX(calc(-50% - 150px));
+          opacity: .45;
+          z-index: 1;
+        `
 
-    opacity: ${(props) => props.opacity};
+      case 'center':
+        return `
+          transform: translateX(-50%);
+          opacity: 1;
+          z-index: 2;
+        `
+
+      case 'right':
+        return `
+          transform: translateX(calc(-50% + 150px));
+          opacity: .45;
+          z-index: 1;
+        `
+
+      default:
+        return `
+          transform: translateX(-50%);
+          opacity: 0;
+          pointer-events: none;
+          z-index: 0;
+        `
+    }
+  }}
 
   img {
-      object-fit: cover;
-      width: 220px;
-      height: 360px;
-      border-radius: 24px;
+    object-fit: cover;
+    border-radius: 24px;
 
-      transform: scale(1.04);
+    transition: all 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 
-      transition:
-        transform .35s,
-        opacity .35s;
+    ${({ position }) => {
+      switch (position) {
+        case 'center':
+          return `
+            width:220px;
+            height:360px;
 
-      box-shadow: 0 0 0 2px rgba(214, 189, 158, 0.45),
-        0 18px 40px rgba(0, 0, 0, 0.45), 0 0 25px rgba(214, 189, 158, 0.18);
-    }
+            filter:none;
+
+            box-shadow:
+              0 0 0 2px rgba(214,189,158,.45),
+              0 18px 40px rgba(0,0,0,.45);
+          `
+
+        case 'left':
+        case 'right':
+          return `
+            width:110px;
+            height:360px;
+
+            filter:brightness(.55)
+                   saturate(.6)
+                   blur(.5px);
+          `
+
+        default:
+          return `
+            width:110px;
+            height:360px;
+          `
+      }
+    }}
   }
-
-  .side {
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: transparent;
-    color: ${variaveis.lightText2};
-    cursor: pointer;
-    transition: color 0.3s ease;
-
-    ${({ position }) => (position === 'left' ? 'right: 30px;' : 'left: 30px;')}
-  }
-
-  button:hover {
-    color: ${variaveis.destaques};
-  }
-  }
-
 `
 
 export const IndicadoresCarrossel = styled.div`

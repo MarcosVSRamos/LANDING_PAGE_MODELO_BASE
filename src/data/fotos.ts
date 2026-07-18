@@ -42,3 +42,41 @@ export const fotosCasamentos = [
     imagem: variaveisImagens.casamento10
   }
 ]
+
+export const fotosNatalinas = [
+  {
+    id: 11,
+    imagem: variaveisImagens.natal1
+  },
+  {
+    id: 12,
+    imagem: variaveisImagens.natal2
+  },
+  {
+    id: 13,
+    imagem: variaveisImagens.natal3
+  },
+  {
+    id: 14,
+    imagem: variaveisImagens.natal4
+  }
+]
+
+export const fotosIntantis = [
+  {
+    id: 15,
+    imagem: variaveisImagens.infantil1
+  },
+  {
+    id: 16,
+    imagem: variaveisImagens.infantil2
+  },
+  {
+    id: 17,
+    imagem: variaveisImagens.infantil3
+  },
+  {
+    id: 18,
+    imagem: variaveisImagens.infantil4
+  }
+]

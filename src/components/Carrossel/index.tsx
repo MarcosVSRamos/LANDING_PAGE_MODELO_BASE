@@ -11,40 +11,26 @@ import {
   Header,
   IndicadoresCarrossel
 } from './styles'
-import { fotosCasamentos } from '../../data/fotos'
+import {
+  fotosCasamentos,
+  fotosIntantis,
+  fotosNatalinas
+} from '../../data/fotos'
 
 const Carrossel = () => {
   const [indiceAtual, setIndiceAtual] = useState(1)
   const [animando, setAnimando] = useState(false)
   const [direcao, setDirecao] = useState<'left' | 'right'>('right')
+  const [categoria, setCategoria] = useState<
+    'casamentos' | 'infantil' | 'natal'
+  >('casamentos')
 
-  const anterior =
-    (indiceAtual - 1 + fotosCasamentos.length) % fotosCasamentos.length
-
-  const atual = indiceAtual
-
-  const proxima = (indiceAtual + 1) % fotosCasamentos.length
-
-  const entrando = (indiceAtual + 2) % fotosCasamentos.length
-
-  const total = fotosCasamentos.length
-
-  let distancia = index - indiceAtual
-
-  if (distancia > total / 2) distancia -= total
-  if (distancia < -total / 2) distancia += total
-
-  let position: 'left' | 'center' | 'right' | 'hidden'
-
-  if (distancia === -1) {
-    position = 'left'
-  } else if (distancia === 0) {
-    position = 'center'
-  } else if (distancia === 1) {
-    position = 'right'
-  } else {
-    position = 'hidden'
-  }
+  const fotos =
+    categoria === 'casamentos'
+      ? fotosCasamentos
+      : categoria === 'infantil'
+      ? fotosIntantis
+      : fotosNatalinas
 
   const voltar = () => {
     if (animando) return
@@ -53,10 +39,7 @@ const Carrossel = () => {
     setAnimando(true)
 
     setTimeout(() => {
-      setIndiceAtual(
-        (indice) =>
-          (indice - 1 + fotosCasamentos.length) % fotosCasamentos.length
-      )
+      setIndiceAtual((indice) => (indice - 1 + fotos.length) % fotos.length)
 
       setAnimando(false)
     }, 350)
@@ -69,7 +52,7 @@ const Carrossel = () => {
     setAnimando(true)
 
     setTimeout(() => {
-      setIndiceAtual((indice) => (indice + 1) % fotosCasamentos.length)
+      setIndiceAtual((indice) => (indice + 1) % fotos.length)
 
       setAnimando(false)
     }, 350)
@@ -78,7 +61,7 @@ const Carrossel = () => {
   useEffect(() => {
     const intervalo = setInterval(() => {
       avancar()
-    }, 7000)
+    }, 10000)
 
     return () => clearInterval(intervalo)
   }, [])
@@ -89,58 +72,65 @@ const Carrossel = () => {
         <h4>MEU TRABALHO</h4>
         <h2 className="secoes-titulos">Galeria</h2>
         <Abas>
-          <a className="active">CASAMENTOS</a>
-          <a>INFANTIL</a>
-          <a>NATAL</a>
+          <a
+            className={categoria === 'casamentos' ? 'active' : ''}
+            onClick={() => {
+              setCategoria('casamentos')
+              setIndiceAtual(0)
+            }}
+          >
+            CASAMENTOS
+          </a>
+          <a
+            className={categoria === 'infantil' ? 'active' : ''}
+            onClick={() => {
+              setCategoria('infantil')
+              setIndiceAtual(0)
+            }}
+          >
+            INFANTIL
+          </a>
+          <a
+            className={categoria === 'natal' ? 'active' : ''}
+            onClick={() => {
+              setCategoria('natal')
+              setIndiceAtual(0)
+            }}
+          >
+            NATAL
+          </a>
         </Abas>
       </Header>
       <CarrosselDiv>
-        <CarouselItem className="side" position="left">
-          <button onClick={voltar}>{<FaArrowLeft size={18} />}</button>
-          <img
-            className={`back-image ${
-              animando && direcao === 'left' ? 'slide-out-left' : ''
-            }`}
-            src={fotosCasamentos[anterior].imagem}
-            alt="noiva"
-          />
-        </CarouselItem>
-        <CarouselItem position="center">
-          <img
-            className={`image-selected ${
-              animando
-                ? direcao === 'right'
-                  ? 'center-to-left'
-                  : 'center-to-right'
-                : ''
-            }`}
-            src={fotosCasamentos[atual].imagem}
-            alt="noiva"
-          />
-        </CarouselItem>
-        <CarouselItem className="side" position="right">
-          <img
-            className={`back-image ${
-              animando && direcao === 'right' ? 'slide-out-right' : ''
-            }`}
-            src={fotosCasamentos[proxima].imagem}
-            alt="noiva"
-          />
-          <button onClick={avancar}>{<FaArrowRight size={18} />}</button>
-        </CarouselItem>
-        <CarouselItem
-          className={`image-next ${
-            animando && direcao === 'left'
-              ? 'slide-out-left-next'
-              : 'slide-out-right-next'
-          }`}
-          position="next"
-        >
-          <img src={fotosCasamentos[entrando].imagem} />
-        </CarouselItem>
+        <button onClick={voltar} className="seta-esquerda">
+          <FaArrowLeft size={20} />
+        </button>
+        {fotos.map((foto, index) => {
+          const total = fotos.length
+
+          let distancia = index - indiceAtual
+
+          if (distancia > total / 2) distancia -= total
+          if (distancia < -total / 2) distancia += total
+
+          let position: 'left' | 'center' | 'right' | 'hidden' = 'hidden'
+
+          if (distancia === -1) position = 'left'
+          else if (distancia === 0) position = 'center'
+          else if (distancia === 1) position = 'right'
+
+          return (
+            <CarouselItem key={foto.id} position={position}>
+              <img src={foto.imagem} alt="" />
+            </CarouselItem>
+          )
+        })}
+        <button onClick={avancar} className="seta-direita">
+          <FaArrowRight size={20} />
+        </button>
       </CarrosselDiv>
       <IndicadoresCarrossel>
-        {fotosCasamentos.map((_, index) => (
+        {fotos.map((_, index) => (
           <button
             key={index}
             className={index === indiceAtual ? 'indicador-ativo' : ''}
