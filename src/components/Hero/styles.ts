@@ -8,7 +8,6 @@ export const DivHero = styled.div`
   display: flex;
   align-items: center;
   margin-left: 12px;
-  height: 30vh;
   top: -12px;
 
   @media (min-width: 766px) {

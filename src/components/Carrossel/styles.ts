@@ -2,6 +2,13 @@ import styled from 'styled-components'
 import variaveis from '../../styles/variaveis'
 import { fadeInAnimation } from '../../styles/animacoes'
 
+type SideProps = {
+  position: 'left' | 'right' | 'center' | 'next'
+  x?: number
+  scale?: number
+  opacity?: number
+}
+
 export const CarrosselSection = styled.section`
   background-color: ${variaveis.darkSection};
   text-align: center;
@@ -32,6 +39,7 @@ export const CarrosselDiv = styled.div`
   align-items: center;
   gap: 12px;
   padding: 16px;
+  margin-left: 120px;
 
   img {
     border-radius: 22px;
@@ -49,37 +57,24 @@ export const CarrosselDiv = styled.div`
 
     filter: brightness(0.55) saturate(0.6) blur(0.5px);
 
-    transition: 0.35s;
+    transition: transform 0.35s, opacity 0.35s;
   }
-`
 
-export const Side = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
+  .image-next {
+    transform: translateX(360px) scale(1);
 
-  button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background-color: transparent;
-    color: ${variaveis.lightText2};
+    opacity: 0;
 
-    span {
-      margin-left: 6px;
+    z-index: 0;
+
+    img {
+      width: 110px;
+      height: 360px;
+
+      object-fit: cover;
+
+      filter: brightness(0.55) saturate(0.6) blur(0.5px);
     }
-  }
-  button:hover {
-    color: ${variaveis.destaques};
-  }
-
-  .left-button {
-    right: 30px;
-  }
-
-  .right-button {
-    left: 30px;
   }
 `
 
@@ -105,7 +100,16 @@ export const Abas = styled.div`
   }
 `
 
-export const SelectedImage = styled.div`
+export const CarouselItem = styled.div<SideProps>`
+
+  transition:
+        transform .7s cubic-bezier(.22,.61,.36,1),
+        opacity .7s;
+
+    transform: translateX(${(props) => props.x}px)
+               scale(${(props) => props.scale});
+
+    opacity: ${(props) => props.opacity};
 
   img {
       object-fit: cover;
@@ -115,11 +119,59 @@ export const SelectedImage = styled.div`
 
       transform: scale(1.04);
 
-      transition: 0.35s ease;
+      transition:
+        transform .35s,
+        opacity .35s;
 
       box-shadow: 0 0 0 2px rgba(214, 189, 158, 0.45),
         0 18px 40px rgba(0, 0, 0, 0.45), 0 0 25px rgba(214, 189, 158, 0.18);
     }
   }
 
+  .side {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: ${variaveis.lightText2};
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    ${({ position }) => (position === 'left' ? 'right: 30px;' : 'left: 30px;')}
+  }
+
+  button:hover {
+    color: ${variaveis.destaques};
+  }
+  }
+
+`
+
+export const IndicadoresCarrossel = styled.div`
+  ${fadeInAnimation}
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+
+  .indicador-ativo {
+    background-color: ${variaveis.destaques};
+    opacity: 90%;
+  }
+
+  button {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background-color: ${variaveis.lightText2};
+    opacity: 30%;
+  }
 `

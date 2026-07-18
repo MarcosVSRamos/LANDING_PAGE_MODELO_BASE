@@ -23,8 +23,8 @@ const CardServicos = () => {
         <div>
           <IoCalendarOutline size={28} />
           <h4 className="paragrafos">FLEXIBILIDADE DE DATAS</h4>
-          <p>Agende com tranquilidade</p>
-          <p>e segurança.</p>
+          <p>Agende com</p>
+          <p>segurança.</p>
         </div>
         <div>
           <FaRegImage size={28} />

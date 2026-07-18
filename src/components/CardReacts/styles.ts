@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import variaveis from '../../styles/variaveis'
+import { fadeInAnimation } from '../../styles/animacoes'
 
 export const SectionComments = styled.section`
   background-color: ${variaveis.darkSection};
@@ -42,6 +43,7 @@ export const Perfil = styled.div`
 `
 
 export const DivComment = styled.div`
+  ${fadeInAnimation}
   display: flex;
   flex-direction: column;
   margin-left: 22px;
@@ -60,6 +62,7 @@ export const DivComment = styled.div`
 `
 
 export const Image = styled.img`
+  ${fadeInAnimation}
   width: 190px;
   height: 240px;
   object-fit: cover;

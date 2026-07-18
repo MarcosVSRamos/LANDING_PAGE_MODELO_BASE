@@ -3,20 +3,20 @@ import variaveis from '../../styles/variaveis'
 import { fadeInAnimation } from '../../styles/animacoes'
 
 export const SectionCard = styled.section`
-  ${fadeInAnimation}
   background-color: ${variaveis.darkSection};
   padding: 32px 0;
   margin-bottom: -2px;
 `
 
 export const DivCard = styled.div`
+  ${fadeInAnimation}
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   margin: 0 auto;
-  gap: 12px;
-  padding: 16px;
+  gap: 4px;
+  padding: 14px;
   width: 95%;
   border-radius: 16px;
 
@@ -29,7 +29,7 @@ export const DivCard = styled.div`
     0 0 10px rgba(138, 128, 117, 0.18);
 
   div {
-    max-width: 110px;
+    max-width: 128px;
     display: block;
   }
 
@@ -39,7 +39,7 @@ export const DivCard = styled.div`
   }
 
   p {
-    font-size: 5px;
+    font-size: 6px;
     font-weight: 400;
   }
 `

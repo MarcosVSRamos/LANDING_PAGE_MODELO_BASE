@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import Footer from './components/Footer'
+import Flutuante from './components/Flutuante'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import EstiloGlobal, { MainContainer } from './styles'
 import CardServicos from './components/CardServicos'
 import Carrossel from './components/Carrossel'
 import CardReacts from './components/CardReacts'
+import Footer from './components/Footer'
 
 function App() {
   const [showButton, setShowButton] = useState(false)
@@ -38,7 +39,8 @@ function App() {
         <Carrossel />
         <CardServicos />
         <CardReacts />
-        <Footer visible={showButton} />
+        <Footer />
+        <Flutuante visible={showButton} />
       </MainContainer>
     </>
   )

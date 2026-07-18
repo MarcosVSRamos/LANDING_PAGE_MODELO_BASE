@@ -13,7 +13,10 @@ export const HeaderContent = styled.header`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 35vh;
+  padding-bottom: 48px;
+
+  @media (min-width: 766px) {
+  }
 
   .divider {
     display: block;
