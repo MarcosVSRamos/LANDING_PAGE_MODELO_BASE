@@ -43,7 +43,6 @@ export const Perfil = styled.div`
 `
 
 export const DivComment = styled.div`
-  ${fadeInAnimation}
   display: flex;
   flex-direction: column;
   margin-left: 22px;
@@ -52,21 +51,24 @@ export const DivComment = styled.div`
 
   span {
     color: ${variaveis.elementosDestacados};
+    ${fadeInAnimation}
   }
 
   p {
+    ${fadeInAnimation}
     font-family: ${variaveis.fontTitulo2};
     max-width: 160px;
-    max-height: 200px;
+    min-height: 90px;
+    max-height: 100px;
   }
 `
 
 export const Image = styled.img`
-  ${fadeInAnimation}
   width: 190px;
   height: 240px;
   object-fit: cover;
   border-radius: 0 16px 16px 0;
+  ${fadeInAnimation}
 
   -webkit-mask-image: linear-gradient(
     to right,
@@ -96,10 +98,11 @@ export const Indicadores = styled.div`
     opacity: 90%;
   }
 
-  a {
-    width: 6px;
+  button {
+    border: none;
+    width: 16px;
     height: 6px;
-    border-radius: 50%;
+    border-radius: 16px;
     background-color: ${variaveis.lightText2};
     opacity: 30%;
   }
